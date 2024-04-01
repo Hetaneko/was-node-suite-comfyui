@@ -5156,7 +5156,8 @@ class WAS_Load_Image_Batch:
                 cstr(f"No valid image was found for the next ID. Did you remove images from the source directory?").error.print()
                 return (None, None)
 
-
+        prompt = image.text["prompt"] if "prompt" in image.text else ""
+        
         # Update history
         update_history_images(new_paths)
 
@@ -5166,7 +5167,7 @@ class WAS_Load_Image_Batch:
         if filename_text_extension == "false":
             filename = os.path.splitext(filename)[0]
             
-        prompt = image.text["prompt"] if "prompt" in image.text else ""
+        
         return (pil2tensor(image), filename, prompt)
 
     class BatchImageLoader:
