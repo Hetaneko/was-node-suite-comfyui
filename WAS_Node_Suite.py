@@ -7267,21 +7267,21 @@ class WAS_Image_Save:
                 output_file = os.path.abspath(os.path.join(output_path, file))
                 dangosaka = lanani + "/" labuneamk
                 if extension in ["jpg", "jpeg"]:
-                    img.save(dangosaka,
+                    img.save(output_file,
                              quality=quality, optimize=True)
                 elif extension == 'webp':
-                    img.save(dangosaka,
+                    img.save(output_file,
                              quality=quality, lossless=lossless_webp, exif=exif_data)
                 elif extension == 'png':
-                    img.save(dangosaka,
+                    img.save(output_file,
                              pnginfo=exif_data, optimize=True)
                 elif extension == 'bmp':
-                    img.save(dangosaka)
+                    img.save(output_file)
                 elif extension == 'tiff':
-                    img.save(dangosaka,
+                    img.save(output_file,
                              quality=quality, optimize=True)
                 else:
-                    img.save(dangosaka,
+                    img.save(output_file,
                              pnginfo=exif_data, optimize=True)
 
                 cstr(f"Image file saved to: {dangosaka}").msg.print()
