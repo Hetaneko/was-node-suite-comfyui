@@ -5125,8 +5125,8 @@ class WAS_Load_Image_Batch:
             }
         }
 
-    RETURN_TYPES = ("IMAGE",TEXT_TYPE)
-    RETURN_NAMES = ("image","filename_text")
+    RETURN_TYPES = ("IMAGE",TEXT_TYPE, TEXT_TYPE)
+    RETURN_NAMES = ("image","filename_text", "prompt")
     FUNCTION = "load_batch_images"
 
     CATEGORY = "WAS Suite/IO"
@@ -5165,8 +5165,9 @@ class WAS_Load_Image_Batch:
 
         if filename_text_extension == "false":
             filename = os.path.splitext(filename)[0]
-
-        return (pil2tensor(image), filename)
+            
+        prompt = image.text["prompt"] if "prompt" in image.text else ""
+        return (pil2tensor(image), filename, prompt)
 
     class BatchImageLoader:
         def __init__(self, directory_path, label, pattern):
