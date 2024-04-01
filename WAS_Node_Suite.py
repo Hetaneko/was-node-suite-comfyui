@@ -7143,7 +7143,7 @@ class WAS_Image_Save:
                 "show_history_by_prefix": (["true", "false"],),
                 "embed_workflow": (["true", "false"],),
                 "show_previews": (["true", "false"],),
-                # "text": (TEXT_TYPE, {"forceInput": (True if TEXT_TYPE == 'STRING' else False)}),
+                "labuneamk": (TEXT_TYPE, {"forceInput": (True if TEXT_TYPE == 'STRING' else False)}),
             },
             "hidden": {
                 "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
@@ -7161,7 +7161,7 @@ class WAS_Image_Save:
                         extension='png', quality=100, lossless_webp="false", prompt=None, extra_pnginfo=None,
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
-                        show_previews="true"):
+                        show_previews="true", labuneamk=''):
 
         delimiter = filename_delimiter
         number_padding = filename_number_padding
