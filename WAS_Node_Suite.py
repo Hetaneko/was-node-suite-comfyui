@@ -7163,7 +7163,7 @@ class WAS_Image_Save:
                         extension='png', quality=100, lossless_webp="false", prompt=None, extra_pnginfo=None,
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
-                        show_previews="true", outputfilename):
+                        show_previews="true", outputfilename=''):
 
         delimiter = filename_delimiter
         number_padding = filename_number_padding
