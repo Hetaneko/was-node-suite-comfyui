@@ -7130,7 +7130,7 @@ class WAS_Image_Save:
         return {
             "required": {
                 "images": ("IMAGE", ),
-                "output_path": ("STRING", {"default": '[time(%Y-%m-%d)]', "multiline": False}),
+                "output_path": ("STRING", ),
                 "filename_prefix": ("STRING", {"default": "ComfyUI"}),
                 "filename_delimiter": ("STRING", {"default":"_"}),
                 "filename_number_padding": ("INT", {"default":4, "min":1, "max":9, "step":1}),
