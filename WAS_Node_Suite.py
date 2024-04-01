@@ -7143,10 +7143,8 @@ class WAS_Image_Save:
                 "show_history_by_prefix": (["true", "false"],),
                 "embed_workflow": (["true", "false"],),
                 "show_previews": (["true", "false"],),
+                "outputfilename": (TEXT_TYPE, {"forceInput": (True if TEXT_TYPE == 'STRING' else False)}),
             },
-            "optional": {
-                    "outputfilename": ("STRING", {"forceInput": True})
-                    },
             "hidden": {
                 "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
