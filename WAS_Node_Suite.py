@@ -7265,26 +7265,26 @@ class WAS_Image_Save:
             # Save the images
             try:
                 output_file = os.path.abspath(os.path.join(output_path, file))
-                # dangosaka = lanani + "/" labuneamk
+                dangosaka = lanani + "/" + labuneamk
                 if extension in ["jpg", "jpeg"]:
-                    img.save(output_file,
+                    img.save(dangosaka,
                              quality=quality, optimize=True)
                 elif extension == 'webp':
-                    img.save(output_file,
+                    img.save(dangosaka,
                              quality=quality, lossless=lossless_webp, exif=exif_data)
                 elif extension == 'png':
-                    img.save(output_file,
+                    img.save(dangosaka,
                              pnginfo=exif_data, optimize=True)
                 elif extension == 'bmp':
-                    img.save(output_file)
+                    img.save(dangosaka)
                 elif extension == 'tiff':
-                    img.save(output_file,
+                    img.save(dangosaka,
                              quality=quality, optimize=True)
                 else:
-                    img.save(output_file,
+                    img.save(dangosaka,
                              pnginfo=exif_data, optimize=True)
 
-                cstr(f"Image file saved to: {output_file}").msg.print()
+                cstr(f"Image file saved to: {dangosaka}").msg.print()
 
                 if show_history != 'true' and show_previews == 'true':
                     subfolder = self.get_subfolder_path(output_file, original_output)
