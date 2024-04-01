@@ -5156,7 +5156,7 @@ class WAS_Load_Image_Batch:
                 cstr(f"No valid image was found for the next ID. Did you remove images from the source directory?").error.print()
                 return (None, None)
 
-        prompt = image.text["prompt"] if "prompt" in image.text else ""
+        prompt = "asdf"
         
         # Update history
         update_history_images(new_paths)
@@ -5211,6 +5211,7 @@ class WAS_Load_Image_Batch:
             cstr(f'{cstr.color.YELLOW}{self.label}{cstr.color.END} Index: {self.index}').msg.print()
             self.WDB.insert('Batch Counters', self.label, self.index)
             i = Image.open(image_path)
+            print("aaaaggggg "+str(i.text["prompt"]))
             i = ImageOps.exif_transpose(i)
             return (i, os.path.basename(image_path))
 
