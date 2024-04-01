@@ -5140,23 +5140,23 @@ class WAS_Load_Image_Batch:
         fl = self.BatchImageLoader(path, label, pattern)
         new_paths = fl.image_paths
         if mode == 'single_image':
-            image, filename = fl.get_image_by_id(index)
+            image, filename, promptl = fl.get_image_by_id(index)
             if image == None:
                 cstr(f"No valid image was found for the inded `{index}`").error.print()
                 return (None, None)
         elif mode == 'incremental_image':
-            image, filename = fl.get_next_image()
+            image, filename, promptl = fl.get_next_image()
             if image == None:
                 cstr(f"No valid image was found for the next ID. Did you remove images from the source directory?").error.print()
                 return (None, None)
         else:
             newindex = int(random.random() * len(fl.image_paths))
-            image, filename = fl.get_image_by_id(newindex)
+            image, filename, promptl = fl.get_image_by_id(newindex)
             if image == None:
                 cstr(f"No valid image was found for the next ID. Did you remove images from the source directory?").error.print()
                 return (None, None)
 
-        prompt = "asdf"
+        prompt = promptl
         
         # Update history
         update_history_images(new_paths)
@@ -5198,8 +5198,9 @@ class WAS_Load_Image_Batch:
                 cstr(f"Invalid image index `{image_id}`").error.print()
                 return
             i = Image.open(self.image_paths[image_id])
+            tprompt = str(i.text["prompt"])
             i = ImageOps.exif_transpose(i)
-            return (i, os.path.basename(self.image_paths[image_id]))
+            return (i, os.path.basename(self.image_paths[image_id]), tprompt)
 
         def get_next_image(self):
             if self.index >= len(self.image_paths):
@@ -5211,9 +5212,9 @@ class WAS_Load_Image_Batch:
             cstr(f'{cstr.color.YELLOW}{self.label}{cstr.color.END} Index: {self.index}').msg.print()
             self.WDB.insert('Batch Counters', self.label, self.index)
             i = Image.open(image_path)
-            print("aaaaggggg "+str(i.text["prompt"]))
+            tprompt = str(i.text["prompt"])
             i = ImageOps.exif_transpose(i)
-            return (i, os.path.basename(image_path))
+            return (i, os.path.basename(image_path), tprompt)
 
         def get_current_image(self):
             if self.index >= len(self.image_paths):
