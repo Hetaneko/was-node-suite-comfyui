@@ -7144,6 +7144,9 @@ class WAS_Image_Save:
                 "embed_workflow": (["true", "false"],),
                 "show_previews": (["true", "false"],),
             },
+            "optional": {
+                    "outputfilename": ("STRING", {"forceInput": True})
+                    },
             "hidden": {
                 "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
             },
@@ -7160,7 +7163,7 @@ class WAS_Image_Save:
                         extension='png', quality=100, lossless_webp="false", prompt=None, extra_pnginfo=None,
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
-                        show_previews="true"):
+                        show_previews="true", outputfilename):
 
         delimiter = filename_delimiter
         number_padding = filename_number_padding
@@ -7168,10 +7171,12 @@ class WAS_Image_Save:
 
         # Define token system
         tokens = TextTokens()
-
+        
         original_output = self.output_dir
         # Parse prefix tokens
         filename_prefix = tokens.parseTokens(filename_prefix)
+
+        lagabuga = output_path
 
         # Setup output path
         if output_path in [None, '', "none", "."]:
@@ -7228,72 +7233,10 @@ class WAS_Image_Save:
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
 
             # Delegate metadata/pnginfo
-            if extension == 'webp':
-                img_exif = img.getexif()
-                workflow_metadata = ''
-                prompt_str = ''
-                if prompt is not None:
-                    prompt_str = json.dumps(prompt)
-                    img_exif[0x010f] = "Prompt:" + prompt_str
-                if extra_pnginfo is not None:
-                    for x in extra_pnginfo:
-                        workflow_metadata += json.dumps(extra_pnginfo[x])
-                img_exif[0x010e] = "Workflow:" + workflow_metadata
-                exif_data = img_exif.tobytes()
-            else:
-                metadata = PngInfo()
-                if embed_workflow == 'true':
-                    if prompt is not None:
-                        metadata.add_text("prompt", json.dumps(prompt))
-                    if extra_pnginfo is not None:
-                        for x in extra_pnginfo:
-                            metadata.add_text(x, json.dumps(extra_pnginfo[x]))
-                exif_data = metadata
-
-            # Delegate the filename stuffs
-            if overwrite_mode == 'prefix_as_filename':
-                file = f"{filename_prefix}{file_extension}"
-            else:
-                if filename_number_start == 'true':
-                    file = f"{counter:0{number_padding}}{delimiter}{filename_prefix}{file_extension}"
-                else:
-                    file = f"{filename_prefix}{delimiter}{counter:0{number_padding}}{file_extension}"
-                if os.path.exists(os.path.join(output_path, file)):
-                    counter += 1
-
-            # Save the images
-            try:
-                output_file = os.path.abspath(os.path.join(output_path, file))
-                if extension in ["jpg", "jpeg"]:
-                    img.save(output_file,
-                             quality=quality, optimize=True)
-                elif extension == 'webp':
-                    img.save(output_file,
-                             quality=quality, lossless=lossless_webp, exif=exif_data)
-                elif extension == 'png':
-                    img.save(output_file,
-                             pnginfo=exif_data, optimize=True)
-                elif extension == 'bmp':
-                    img.save(output_file)
-                elif extension == 'tiff':
-                    img.save(output_file,
-                             quality=quality, optimize=True)
-                else:
-                    img.save(output_file,
-                             pnginfo=exif_data, optimize=True)
-
-                cstr(f"Image file saved to: {output_file}").msg.print()
-
-                if show_history != 'true' and show_previews == 'true':
-                    subfolder = self.get_subfolder_path(output_file, original_output)
-                    results.append({
-                        "filename": file,
-                        "subfolder": subfolder,
-                        "type": self.type
-                    })
-
-                # Update the output image history
-                update_history_output_images(output_file)
+            labuneamk = lagabuga + "/" + outputfilename 
+            img.save(outputfilename, quality=quality, lossless=lossless_webp)
+                     
+            update_history_output_images(output_file)
 
             except OSError as e:
                 cstr(f'Unable to save file to: {output_file}').error.print()
