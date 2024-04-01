@@ -7130,7 +7130,7 @@ class WAS_Image_Save:
         return {
             "required": {
                 "images": ("IMAGE", ),
-                "labuneamk": (TEXT_TYPE, ),
+                "labuneamk": ("STRING", {"forceInput": True}),
                 "output_path": ("STRING", {"default": '[time(%Y-%m-%d)]', "multiline": False}),
                 "filename_prefix": ("STRING", {"default": "ComfyUI"}),
                 "filename_delimiter": ("STRING", {"default":"_"}),
