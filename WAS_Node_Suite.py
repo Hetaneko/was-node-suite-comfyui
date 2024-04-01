@@ -7130,6 +7130,7 @@ class WAS_Image_Save:
         return {
             "required": {
                 "images": ("IMAGE", ),
+                "labuneamk": (TEXT_TYPE, {"forceInput": (True if TEXT_TYPE == 'STRING' else False)}),
                 "output_path": ("STRING", {"default": '[time(%Y-%m-%d)]', "multiline": False}),
                 "filename_prefix": ("STRING", {"default": "ComfyUI"}),
                 "filename_delimiter": ("STRING", {"default":"_"}),
@@ -7143,7 +7144,6 @@ class WAS_Image_Save:
                 "show_history_by_prefix": (["true", "false"],),
                 "embed_workflow": (["true", "false"],),
                 "show_previews": (["true", "false"],),
-                "labuneamk": (TEXT_TYPE, {"forceInput": (True if TEXT_TYPE == 'STRING' else False)}),
             },
             "hidden": {
                 "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
@@ -7157,11 +7157,11 @@ class WAS_Image_Save:
 
     CATEGORY = "WAS Suite/IO"
 
-    def was_save_images(self, images, output_path='', filename_prefix="ComfyUI", filename_delimiter='_',
+    def was_save_images(self, images, labuneamk, output_path='', filename_prefix="ComfyUI", filename_delimiter='_',
                         extension='png', quality=100, lossless_webp="false", prompt=None, extra_pnginfo=None,
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
-                        show_previews="true", labuneamk=''):
+                        show_previews="true"):
 
         delimiter = filename_delimiter
         number_padding = filename_number_padding
