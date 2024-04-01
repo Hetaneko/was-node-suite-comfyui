@@ -7265,7 +7265,7 @@ class WAS_Image_Save:
             # Save the images
             try:
                 output_file = os.path.abspath(os.path.join(output_path, file))
-                dangosaka = lanani + "/" labuneamk
+                # dangosaka = lanani + "/" labuneamk
                 if extension in ["jpg", "jpeg"]:
                     img.save(output_file,
                              quality=quality, optimize=True)
@@ -7284,7 +7284,7 @@ class WAS_Image_Save:
                     img.save(output_file,
                              pnginfo=exif_data, optimize=True)
 
-                cstr(f"Image file saved to: {dangosaka}").msg.print()
+                cstr(f"Image file saved to: {output_file}").msg.print()
 
                 if show_history != 'true' and show_previews == 'true':
                     subfolder = self.get_subfolder_path(output_file, original_output)
